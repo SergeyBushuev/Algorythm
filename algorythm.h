@@ -13,14 +13,11 @@ public:
 	void mainAlg();
 	void iter(int cost);
 	bool check();
-	bool evristika(map<int, int> &map, int cost, int maxO);
-	map<string, int> names; //Хранит пару имя - номер продукта, служит для перевода из string в int
-	vector<int> prices;     //Хранит цену в соответствии prices[i] = цена продукта i
-	vector<pair<map<int, int>, int>> discounts; //вектор который хранит меню следующим способом: пары мэп<номер продукта, его количество>, цена
-	map<int, int> needfull;						//хранит пары номер продукта - количество, необходимые нам
+	map<string, int> names; //РҐСЂР°РЅРёС‚ РїР°СЂСѓ РёРјСЏ - РЅРѕРјРµСЂ РїСЂРѕРґСѓРєС‚Р°, СЃР»СѓР¶РёС‚ РґР»СЏ РїРµСЂРµРІРѕРґР° РёР· string РІ int
+	vector<pair<map<int, int>, int>> discounts; //РІРµРєС‚РѕСЂ РєРѕС‚РѕСЂС‹Р№ С…СЂР°РЅРёС‚ РјРµРЅСЋ СЃР»РµРґСѓСЋС‰РёРј СЃРїРѕСЃРѕР±РѕРј: РїР°СЂС‹ РјСЌРї<РЅРѕРјРµСЂ РїСЂРѕРґСѓРєС‚Р°, РµРіРѕ РєРѕР»РёС‡РµСЃС‚РІРѕ>, С†РµРЅР°
+	map<int, int> needfull;						//С…СЂР°РЅРёС‚ РїР°СЂС‹ РЅРѕРјРµСЂ РїСЂРѕРґСѓРєС‚Р° - РєРѕР»РёС‡РµСЃС‚РІРѕ, РЅРµРѕР±С…РѕРґРёРјС‹Рµ РЅР°Рј
 	map<map<int, int>, int> sostayanie;
-	stack<map<int, int>> sostayanie2;
-	stack<map<int, int>> solution;
-	int finalPrice;
-	int maxO;									//оценка сверху
+	vector<map<int, int>> sostayanie2;
+	vector<map<int, int>> solution;
+	int finalPrice;								//РѕС†РµРЅРєР° СЃРІРµСЂС…Сѓ, РІ РєРѕРЅС†Рµ РїСЂРёР±Р»РёР¶Р°РµС‚СЃСЏ Рє 
 };
