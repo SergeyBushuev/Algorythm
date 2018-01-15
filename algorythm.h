@@ -12,7 +12,7 @@ public:
 	~Algorythm();
 	void mainAlg();
 	void iter(int cost);
-	bool check();
+	bool check();	//Проверка, является ли текущая ветка решением
 	map<string, int> names; //Хранит пару имя - номер продукта, служит для перевода из string в int
 	vector<pair<map<int, int>, int>> discounts; //вектор который хранит меню следующим способом: пары мэп<номер продукта, его количество>, цена
 	map<int, int> needfull;						//хранит пары номер продукта - количество, необходимые нам
