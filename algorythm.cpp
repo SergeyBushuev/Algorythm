@@ -7,19 +7,15 @@ using namespace std;
 Algorythm::Algorythm() {};
 Algorythm::~Algorythm() {};
 void Algorythm::mainAlg() {
-	maxO = 0;
+	finalPrice = 0;
 	for (auto it = needfull.begin(); it != needfull.end(); it++) {
-		maxO = maxO + discounts[it->second].second*needfull[it->first];
+		finalPrice = finalPrice + discounts[it->second].second*needfull[it->first];
 	}
-	finalPrice = maxO;
-	cout <<"\nPervaya ocenka sverhu = " << maxO;
 	int cost = 0;
 	iter(cost);
 }
-bool Algorythm::evristika(map<int, int> &map, int cost, int maxO) {
-	if (cost > maxO) return true;
-	else return false;
-}
+
+
 bool Algorythm::check() {
 	for (auto it = needfull.begin(); it != needfull.end(); it++) {
 		if (it->second > 0) return false; 
@@ -30,29 +26,30 @@ bool Algorythm::check() {
 void Algorythm::iter(int cost) {
 
 	if (sostayanie.find(needfull) != sostayanie.end() && sostayanie[needfull] <= cost) return;
-	else sostayanie[needfull] = cost; //(ÚÛÚ ÂÒÂÒÌÓ ÎÛ˜¯Â Ò‰ÂÎ‡Ú¸ ËÚÂ‡ÚÓ it = sostayanie.find(needfull), ¯Ó· ÚË ‡Á‡ ˝ÚÛ ıÛÈÌ˛ ÌÂ ‚˚Á˚‚‡Ú¸)
-	//cout << " "<< cost;
-	
+	else sostayanie[needfull] = cost; //(—Ç—É—Ç –µ—Å–µ—Å–Ω–æ –ª—É—á—à–µ —Å–¥–µ–ª–∞—Ç—å –∏—Ç–µ—Ä–∞—Ç–æ—Ä it = sostayanie.find(needfull), —à–æ–± —Ç—Ä–∏ —Ä–∞–∑–∞ —ç—Ç—É —Ö—É–π–Ω—é –Ω–µ –≤—ã–∑—ã–≤–∞—Ç—å)
 	if (cost > finalPrice) return;
 
 	if (check()) {
 		if (cost < finalPrice) {
 			finalPrice = cost;
+			solution.clear();
+			for (int i = 0; i < sostayanie2.size(); i++) {
+				solution.pb(sostayanie2[i]);
+			}
 		}
-	//	cout << " SOLUTION COST =" << finalPrice;
 		return;
 	}
-	for (auto it = discounts.begin(); it != discounts.end(); it++) {        //ÔÓıÓ‰ËÏ ÔÓ Ï‡ÒÒË‚Û discount
-		auto skidon = it->first;                                            //ÔËÒ‚‡Ë‚‡ÂÏ ÔÂÂÏÂÌÌÓÈ skidon ÛÍ‡Á‡ÚÂÎ¸ Ì‡ Ì‡·Ó ÔÓ‰ÛÍÚÓ‚ ‚ ÒÍË‰ÍÂ
-		bool flag = false;                                                  //ÙÎ‡„ ÒÓÒÚÓˇÌËˇ ÒÍË‰ÍË. œÓ‰ÌˇÚ - ÒÍË‰ÍÛ ÏÓÊÌÓ ‚ÍÎ˛˜ËÚ¸ ‚ Â¯ÂÌËÂ. ŒÔÛ˘ÂÌ - ÒÍË‰Í‡ ÌÂ ÔÓ‰ıÓ‰ËÚ Í Â¯ÂÌË˛
+	for (auto it = discounts.begin(); it != discounts.end(); it++) {        //–ø—Ä–æ—Ö–æ–¥–∏–º –ø–æ –º–∞—Å—Å–∏–≤—É discount
+		auto skidon = it->first;                                            //–ø—Ä–∏—Å–≤–∞–∏–≤–∞–µ–º –ø–µ—Ä–µ–º–µ–Ω–Ω–æ–π skidon —É–∫–∞–∑–∞—Ç–µ–ª—å –Ω–∞ –Ω–∞–±–æ—Ä –ø—Ä–æ–¥—É–∫—Ç–æ–≤ –≤ —Å–∫–∏–¥–∫–µ
+		bool flag = false;                                                  //—Ñ–ª–∞–≥ —Å–æ—Å—Ç–æ—è–Ω–∏—è —Å–∫–∏–¥–∫–∏. –ü–æ–¥–Ω—è—Ç - —Å–∫–∏–¥–∫—É –º–æ–∂–Ω–æ –≤–∫–ª—é—á–∏—Ç—å –≤ —Ä–µ—à–µ–Ω–∏–µ. –û–ø—É—â–µ–Ω - —Å–∫–∏–¥–∫–∞ –Ω–µ –ø–æ–¥—Ö–æ–¥–∏—Ç –∫ —Ä–µ—à–µ–Ω–∏—é
 		vector<pair<int, int> > added(0);
-		for (auto itt = skidon.begin(); itt != skidon.end(); itt++) {       //ÔÓıÓ‰ËÏ ÔÓ ÔÓ‰ÛÍÚ‡Ï ‚ ÔÂÂÏÂÌÌÓÈ skidon
-			if (needfull.find(itt->first) != needfull.end() && needfull[itt->first] > 0) { added.pb(make_pair(itt->first, itt->second)); flag = true; needfull[itt->first] -= itt->second; } //ÂÒÎË ‚ ÒÍË‰ÍÂ ËÏÂ˛ÚÒˇ ÓÒÚ‡‚¯ËÂÒˇ Í ÔÓÍÛÔÍÂ ÔÓ‰ÛÍÚ˚, ÚÓ Ï˚ Â∏ ÔÓÍÛÔ‡ÂÏ. ¬ Ú‡ÍÓÏ ÒÎÛ˜‡Â ÔÓ‰ÌËÏ‡ÂÏ ÙÎ‡„, ‚˚˜ËÚ‡ÂÏ ÔÓÎÛ˜ÂÌÌ˚Â ÔÓ ÒÍË‰ÍÂ ÔÓ‰ÛÍÚ˚ ËÁ ÚÂ·Ó‚‡‚¯ËıÒˇ.
+		for (auto itt = skidon.begin(); itt != skidon.end(); itt++) {       //–ø—Ä–æ—Ö–æ–¥–∏–º –ø–æ –ø—Ä–æ–¥—É–∫—Ç–∞–º –≤ –ø–µ—Ä–µ–º–µ–Ω–Ω–æ–π skidon
+			if (needfull.find(itt->first) != needfull.end() && needfull[itt->first] > 0) { added.pb(make_pair(itt->first, itt->second)); flag = true; needfull[itt->first] -= itt->second; } //–µ—Å–ª–∏ –≤ —Å–∫–∏–¥–∫–µ –∏–º–µ—é—Ç—Å—è –æ—Å—Ç–∞–≤—à–∏–µ—Å—è –∫ –ø–æ–∫—É–ø–∫–µ –ø—Ä–æ–¥—É–∫—Ç—ã, —Ç–æ –º—ã –µ—ë –ø–æ–∫—É–ø–∞–µ–º. –í —Ç–∞–∫–æ–º —Å–ª—É—á–∞–µ –ø–æ–¥–Ω–∏–º–∞–µ–º —Ñ–ª–∞–≥, –≤—ã—á–∏—Ç–∞–µ–º –ø–æ–ª—É—á–µ–Ω–Ω—ã–µ –ø–æ —Å–∫–∏–¥–∫–µ –ø—Ä–æ–¥—É–∫—Ç—ã –∏–∑ —Ç—Ä–µ–±–æ–≤–∞–≤—à–∏—Ö—Å—è.
 		}
 		if (!flag) continue;
-		sostayanie2.push(skidon);
-		iter(cost + it->second); //ÂÒÎË ÙÎ‡„ ÔÓ‰ÌˇÚ - ÔË·‡‚ÎˇÂÏ ÒÚÓËÏÓÒÚ¸ ÔËÓ·ÂÚ∏ÌÌÓ„Ó ÍÓÏÔÎÂÍÚ‡ Í ÔÓÚ‡˜ÂÌÌ˚Ï ‰ÂÌ¸„‡Ï, Ë Á‡ÔÛÒÍ‡ÂÏ ÌÓ‚Û˛ ËÚÂ‡ˆË˛ ÓÚ ‰‡ÌÌÓÈ
-		sostayanie2.pop();
+		sostayanie2.pb(skidon);
+		iter(cost + it->second); //–µ—Å–ª–∏ —Ñ–ª–∞–≥ –ø–æ–¥–Ω—è—Ç - –ø—Ä–∏–±–∞–≤–ª—è–µ–º —Å—Ç–æ–∏–º–æ—Å—Ç—å –ø—Ä–∏–æ–±—Ä–µ—Ç—ë–Ω–Ω–æ–≥–æ –∫–æ–º–ø–ª–µ–∫—Ç–∞ –∫ –ø–æ—Ç—Ä–∞—á–µ–Ω–Ω—ã–º –¥–µ–Ω—å–≥–∞–º, –∏ –∑–∞–ø—É—Å–∫–∞–µ–º –Ω–æ–≤—É—é –∏—Ç–µ—Ä–∞—Ü–∏—é –æ—Ç –¥–∞–Ω–Ω–æ–π
+		sostayanie2.pop_back();
 		for (int i(0); i < added.size(); ++i) {
 			needfull[added[i].first] += added[i].second;
 		}
