@@ -26,7 +26,7 @@ bool Algorythm::check() {
 void Algorythm::iter(int cost) {
 
 	if (sostayanie.find(needfull) != sostayanie.end() && sostayanie[needfull] <= cost) return;
-	else sostayanie[needfull] = cost; //(тут есесно лучше сделать итератор it = sostayanie.find(needfull), шоб три раза эту хуйню не вызывать)
+	else sostayanie[needfull] = cost;
 	if (cost > finalPrice) return;
 
 	if (check()) {
